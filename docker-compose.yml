@@ -1,0 +1,20 @@
+services:
+  agent:
+    build: .
+    container_name: repobrain-agent
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - GEMINI_MODEL_NAME=${GEMINI_MODEL_NAME:-}
+      - AGENT_NAME=${AGENT_NAME:-RepoBrainAgent}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+    volumes:
+      - ./memory:/app/memory
+      - ./artifacts:/app/artifacts
+      - ./.repobrain:/app/.repobrain
+    restart: unless-stopped
